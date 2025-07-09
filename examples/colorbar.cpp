@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
+#include "../matplotlibcpp.h"
 #include <cmath>
 #include <iostream>
-#include "../matplotlibcpp.h"
 
 using namespace std;
 namespace plt = matplotlibcpp;
@@ -11,9 +11,9 @@ int main()
     // Prepare data
     int ncols = 500, nrows = 300;
     std::vector<float> z(ncols * nrows);
-    for (int j=0; j<nrows; ++j) {
-        for (int i=0; i<ncols; ++i) {
-            z.at(ncols * j + i) = std::sin(std::hypot(i - ncols/2, j - nrows/2));
+    for (int j = 0; j < nrows; ++j) {
+        for (int i = 0; i < ncols; ++i) {
+            z.at(ncols * j + i) = std::sin(std::hypot(i - ncols / 2, j - nrows / 2));
         }
     }
 

@@ -23,7 +23,7 @@ int main()
         matrix.push_back(row);
     }
 
-    plt::spy(matrix, 5, {{"marker", "o"}});
+    plt::spy(matrix, 5, { { "marker", "o" } });
     plt::show();
 
     return 0;
