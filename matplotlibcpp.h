@@ -987,7 +987,7 @@ namespace detail {
 
     inline void imshow(void* ptr, const NPY_TYPES type, const int rows, const int columns, const int colors, const std::map<std::string, std::string>& keywords, PyObject** out)
     {
-        assert(type == NPY_UINT8 || type == NPY_FLOAT);
+        assert(type == NPY_UINT8 || type == NPY_FLOAT || type == NPY_DOUBLE || type == NPY_INT);
         assert(colors == 1 || colors == 3 || colors == 4);
 
         detail::_interpreter::get();
@@ -1040,6 +1040,14 @@ void imshow(const cv::Mat& image, const std::map<std::string, std::string>& keyw
         image2 = image;
         npy_type = NPY_FLOAT;
         break;
+    case CV_64F:
+        image2 = image;
+        npy_type = NPY_DOUBLE;
+        break;
+    case CV_32S:
+        image2 = image;
+        npy_type = NPY_INT;
+        break;
     default:
         image.convertTo(image2, CV_MAKETYPE(CV_8U, image.channels()));
     }
@@ -1053,7 +1061,7 @@ void imshow(const cv::Mat& image, const std::map<std::string, std::string>& keyw
         cv::cvtColor(image2, image2, CV_BGRA2RGBA);
     }
 
-    detail::imshow(image2.data, npy_type, image2.rows, image2.cols, image2.channels(), keywords);
+    detail::imshow(image2.data, npy_type, image2.rows, image2.cols, image2.channels(), keywords, nullptr);
 }
 #endif // WITH_OPENCV
 #endif // WITHOUT_NUMPY
