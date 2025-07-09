@@ -2,7 +2,12 @@
 
 // Python headers must be included before any system headers, since
 // they define _POSIX_C_SOURCE
-#include <Python.h>
+// Solve compilation error caused by Qt implementing a "slots" macro conflicting with Python.h
+// (https://stackoverflow.com/questions/23068700/embedding-python3-in-qt-5)
+#pragma push_macro("slots")
+#undef slots
+#include "Python.h"
+#pragma pop_macro("slots")
 
 #include <algorithm>
 #include <array>
