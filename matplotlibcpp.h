@@ -1041,18 +1041,14 @@ void imshow(const cv::Mat& image, const std::map<std::string, std::string>& keyw
     NPY_TYPES npy_type = NPY_UINT8;
     switch (image.type() & CV_MAT_DEPTH_MASK) {
     case CV_8U:
-        image2 = image;
         break;
     case CV_32F:
-        image2 = image;
         npy_type = NPY_FLOAT;
         break;
     case CV_64F:
-        image2 = image;
         npy_type = NPY_DOUBLE;
         break;
     case CV_32S:
-        image2 = image;
         npy_type = NPY_INT;
         break;
     default:
@@ -1060,12 +1056,15 @@ void imshow(const cv::Mat& image, const std::map<std::string, std::string>& keyw
     }
 
     // If color image, convert from BGR to RGB
-    switch (image2.channels()) {
+    switch (image.channels()) {
+    case 1:
+        image.copyTo(image2);
+        break;
     case 3:
-        cv::cvtColor(image2, image2, CV_BGR2RGB);
+        cv::cvtColor(image, image2, CV_BGR2RGB);
         break;
     case 4:
-        cv::cvtColor(image2, image2, CV_BGRA2RGBA);
+        cv::cvtColor(image, image2, CV_BGRA2RGBA);
     }
 
     detail::imshow(image2.data, npy_type, image2.rows, image2.cols, image2.channels(), keywords, nullptr);
